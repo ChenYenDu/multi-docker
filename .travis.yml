@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t cylaotu/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true cylaotu/react-test npm test
+
+after_success:
+  - docker build -t cylaotu/mulit-client ./client
+  - docker build -t cylaotu/mulit-nginx ./nginx
+  - docker build -t cylaotu/mulit-server ./server
+  - docker build -t cylaotu/mulit-worker ./worker
+  # Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push to dockerhub
+  - docker push cylaotu/multi-client
+  - docker push cylaotu/multi-nginx
+  - docker push cylaotu/multi-server
+  - docker push cylaotu/multi-worker
