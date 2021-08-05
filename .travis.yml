@@ -9,10 +9,10 @@ script:
   - docker run -e CI=true cylaotu/react-test npm test
 
 after_success:
-  - docker build -t cylaotu/mulit-client ./client
-  - docker build -t cylaotu/mulit-nginx ./nginx
-  - docker build -t cylaotu/mulit-server ./server
-  - docker build -t cylaotu/mulit-worker ./worker
+  - docker build -t cylaotu/multi-client ./client
+  - docker build -t cylaotu/multi-nginx ./nginx
+  - docker build -t cylaotu/multi-server ./server
+  - docker build -t cylaotu/multi-worker ./worker
   # Login to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push to dockerhub
