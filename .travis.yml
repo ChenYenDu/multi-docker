@@ -20,3 +20,15 @@ after_success:
   - docker push cylaotu/multi-nginx
   - docker push cylaotu/multi-server
   - docker push cylaotu/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-northeast-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-ap-northeast-1-181322003946'
+  bucket_path: 'docker-multi'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
